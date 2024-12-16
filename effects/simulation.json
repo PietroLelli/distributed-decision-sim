@@ -31,19 +31,19 @@
     "size": {
       "max": 100,
       "min": 0,
-      "val": 19
+      "val": 5
     },
     "molFilter": false,
-    "molString": "org:protelis:tutorial:distanceTo",
+    "molString": "",
     "molPropertyFilter": false,
     "property": "",
     "writingPropertyValue": false,
-    "c": "HUE",
+    "c": "ALPHA",
     "reverse": false,
     "propoom": {
       "max": 10,
       "min": -10,
-      "val": 1
+      "val": 0
     },
     "minprop": {
       "max": 10,
@@ -53,10 +53,11 @@
     "maxprop": {
       "max": 10,
       "min": -10,
-      "val": 2
+      "val": 10
     },
     "colorCache": {
-      "value": -16776961
+      "value": -16777216,
+      "falpha": 0.0
     }
   },
   {
@@ -66,7 +67,7 @@
     "red": {
       "max": 255,
       "min": 0,
-      "val": 0
+      "val": 255
     },
     "blue": {
       "max": 255,
@@ -76,7 +77,7 @@
     "green": {
       "max": 255,
       "min": 0,
-      "val": 0
+      "val": 255
     },
     "alpha": {
       "max": 255,
@@ -91,19 +92,19 @@
     "size": {
       "max": 100,
       "min": 0,
-      "val": 17
+      "val": 20
     },
     "molFilter": true,
-    "molString": "org:protelis:tutorial:distanceTo",
+    "molString": "prodUnit",
     "molPropertyFilter": true,
     "property": "",
     "writingPropertyValue": false,
-    "c": "HUE",
+    "c": "SATURATION",
     "reverse": false,
     "propoom": {
       "max": 10,
       "min": -10,
-      "val": 1
+      "val": 0
     },
     "minprop": {
       "max": 10,
@@ -113,10 +114,11 @@
     "maxprop": {
       "max": 10,
       "min": -10,
-      "val": 2
+      "val": 1
     },
     "colorCache": {
-      "value": -16776961
+      "value": -16776961,
+      "falpha": 0.0
     }
   }
 ]

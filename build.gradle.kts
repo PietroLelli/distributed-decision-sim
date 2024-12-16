@@ -8,6 +8,7 @@ plugins {
     application
     alias(libs.plugins.multiJvmTesting) // Pre-configures the Java toolchains
     alias(libs.plugins.taskTree) // Helps debugging dependencies among gradle tasks
+    kotlin("jvm")
 }
 
 repositories {
@@ -25,7 +26,13 @@ sourceSets {
 }
 dependencies {
     // Check the catalog at gradle/libs.versions.gradle
-    implementation(libs.bundles.alchemist)
+    implementation("it.unibo.alchemist:alchemist-api:36.0.0")
+    implementation("it.unibo.alchemist:alchemist-implementationbase:36.0.0")
+    implementation("it.unibo.alchemist:alchemist-loading:36.0.0")
+    implementation("it.unibo.alchemist:alchemist:36.0.0")
+    implementation("it.unibo.alchemist:alchemist-incarnation-protelis:36.0.0")
+    implementation("it.unibo.alchemist:alchemist-swingui:36.0.0")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 multiJvm {
@@ -96,4 +103,7 @@ tasks.withType<Tar>().configureEach {
 }
 tasks.withType<Zip>().configureEach {
     duplicatesStrategy = DuplicatesStrategy.WARN
+}
+kotlin {
+    jvmToolchain(23)
 }

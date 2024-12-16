@@ -1,26 +1,39 @@
 incarnation: protelis
-
 network-model:
-  type: ConnectWithinDistance
-  parameters: [0.5]
+  type: FullyConnected
 
-_gradient: &gradient
+#_program2: &program2
+#  - time-distribution: 1
+#    program: org:protelis:tutorial:executeFromWaitingList
+
+#_program2: &program2
+#  - time-distribution: 1
+#    program: org:protelis:tutorial:distanceTo
+#
+
+_prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 1
-    program: org:protelis:tutorial:distanceTo
-  - program: send
+    program: org:protelis:tutorial:executeFromWaitingList
+
+_prodUnits: &prodUnits
+  - type: Point
+    parameters: [ 0,0 ]
+    contents:
+      - { molecule: prodUnit }
+      - { molecule: name, concentration: "ProdUnit1" }
+    programs:
+      - *prodUnitsProgram
+
+#  - type: Point
+#    parameters: [ -0.01, -0.01 ]
+#    contents:
+#      - { molecule: prodUnit }
+#      - { molecule: name, concentration: "ProdUnit2" }
+#  - type: Point
+#    parameters: [ 0.01, -0.01 ]
+#    contents:
+#      - { molecule: prodUnit }
+#      - { molecule: name, concentration: "ProdUnit3" }
 
 deployments:
-  type: Grid
-  parameters: [-5, -5, 5, 5, 0.25, 0.25, 0.1, 0.1]
-  contents:
-    - in:
-        type: Rectangle
-        parameters: [-6, -6, 2, 2]
-      molecule: source
-      concentration: true
-    - in:
-        type: Rectangle
-        parameters: [4, 4, 6, 6]
-      molecule: destination
-      concentration: true
-  programs: *gradient
+  *prodUnits
