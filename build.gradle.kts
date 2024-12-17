@@ -26,12 +26,13 @@ sourceSets {
 }
 dependencies {
     // Check the catalog at gradle/libs.versions.gradle
-    implementation("it.unibo.alchemist:alchemist-api:36.0.0")
-    implementation("it.unibo.alchemist:alchemist-implementationbase:36.0.0")
-    implementation("it.unibo.alchemist:alchemist-loading:36.0.0")
-    implementation("it.unibo.alchemist:alchemist:36.0.0")
-    implementation("it.unibo.alchemist:alchemist-incarnation-protelis:36.0.0")
-    implementation("it.unibo.alchemist:alchemist-swingui:36.0.0")
+    implementation("it.unibo.alchemist:alchemist-api:${libs.versions.alchemist.get()}")
+    implementation("it.unibo.alchemist:alchemist-implementationbase:${libs.versions.alchemist.get()}")
+    implementation("it.unibo.alchemist:alchemist-loading:${libs.versions.alchemist.get()}")
+    implementation("it.unibo.alchemist:alchemist:${libs.versions.alchemist.get()}")
+    implementation("it.unibo.alchemist:alchemist-incarnation-protelis:${libs.versions.alchemist.get()}")
+    implementation("it.unibo.alchemist:alchemist-swingui:${libs.versions.alchemist.get()}")
+    implementation("it.unibo.alchemist:alchemist-euclidean-geometry:${libs.versions.alchemist.get()}")
     implementation(kotlin("stdlib-jdk8"))
 }
 

@@ -12,28 +12,40 @@ network-model:
 #
 
 _prodUnitsProgram: &prodUnitsProgram
-  - time-distribution: 1
-    program: org:protelis:tutorial:executeFromWaitingList
+  - time-distribution: 10
+#    program: org:protelis:tutorial:executeFromWaitingList
+    type: Event
+    actions:
+      - type: model.RunOneStep
+        parameters: 1
 
 _prodUnits: &prodUnits
   - type: Point
-    parameters: [ 0,0 ]
+    parameters: [ 0, 0 ]
+    properties:
+        - type: model.ProdUnit
     contents:
       - { molecule: prodUnit }
-      - { molecule: name, concentration: "ProdUnit1" }
     programs:
       - *prodUnitsProgram
 
-#  - type: Point
-#    parameters: [ -0.01, -0.01 ]
-#    contents:
-#      - { molecule: prodUnit }
-#      - { molecule: name, concentration: "ProdUnit2" }
-#  - type: Point
-#    parameters: [ 0.01, -0.01 ]
-#    contents:
-#      - { molecule: prodUnit }
-#      - { molecule: name, concentration: "ProdUnit3" }
+  - type: Point
+    parameters: [ 0.1, 0.1 ]
+    properties:
+      - type: model.ProdUnit
+    contents:
+      - { molecule: prodUnit }
+    programs:
+      - *prodUnitsProgram
+
+  - type: Point
+    parameters: [ 0.2, 0 ]
+    properties:
+      - type: model.ProdUnit
+    contents:
+      - { molecule: prodUnit }
+    programs:
+      - *prodUnitsProgram
 
 deployments:
   *prodUnits
