@@ -16,7 +16,7 @@ class StepGenerator(node: Node<Any>) : AbstractAction<Any>(node) {
     }
 
     override fun execute() {
-        val step = Step("Step"+(0..100).random())
+        val step = Step("Step"+(0..100).random(), StepType("stepType"+(0..100).random(), 2.0, 1.0))
         print("Generated " + step.idCode +"\n")
         prodUnit.addStepToWaitingList(step)
     }

@@ -22,8 +22,9 @@ class ProdUnit(override val node: Node<Any>) : NodeProperty<Any> {
         if (waitingList.isEmpty())
             return
 
-        val stepId = queuingPolicy.getNext(waitingList).idCode
-        waitingList = waitingList.filter { it.idCode != stepId }
-        println("ProdUnit: " + node.id + " executed step: " + stepId)
+        val step = queuingPolicy.getNext(waitingList)
+        step.execute()
+        waitingList = waitingList.filter { it.idCode != step.idCode }
+        println("ProdUnit: " + node.id + " executed step: " + step.idCode)
     }
 }
