@@ -12,12 +12,16 @@ network-model:
 #
 
 _prodUnitsProgram: &prodUnitsProgram
-  - time-distribution: 10
-#    program: org:protelis:tutorial:executeFromWaitingList
+  - time-distribution: 2
     type: Event
     actions:
       - type: model.RunOneStep
         parameters: 1
+
+  - time-distribution: 1
+    type: Event
+    actions:
+      - type: model.StepGenerator
 
 _prodUnits: &prodUnits
   - type: Point

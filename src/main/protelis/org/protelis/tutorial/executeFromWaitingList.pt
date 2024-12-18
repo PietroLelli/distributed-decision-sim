@@ -1,6 +1,0 @@
-module org:protelis:tutorial:executeFromWaitingList
-
-import model.ProdUnit.executeFromWaitingList
-
-executeFromWaitingList()
-

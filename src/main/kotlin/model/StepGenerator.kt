@@ -7,17 +7,22 @@ import it.unibo.alchemist.model.Node.Companion.asProperty
 import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 
-class RunOneStep(node: Node<Any>, val paramExample: Int): AbstractAction<Any>(node) {
+class StepGenerator(node: Node<Any>) : AbstractAction<Any>(node) {
 
     val prodUnit: ProdUnit = node.asProperty()
 
-    override fun cloneAction(node: Node<Any>?, reaction: Reaction<Any>?): Action<Any> {
+    override fun cloneAction(p0: Node<Any>?, p1: Reaction<Any>?): Action<Any> {
         TODO("Not yet implemented")
     }
 
     override fun execute() {
-        prodUnit.executeFromWaitingList()
+        val step = Step("Step"+(0..100).random())
+        print("Generated " + step.idCode +"\n")
+        prodUnit.addStepToWaitingList(step)
     }
 
-    override fun getContext(): Context = Context.LOCAL
+    override fun getContext(): Context {
+        return Context.LOCAL
+    }
+
 }

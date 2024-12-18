@@ -2,14 +2,14 @@ package model
 
 import it.unibo.alchemist.model.*
 
-class ProdUnit(val idCode: String, override val node: Node<Any>) : NodeProperty<Any> {
+class ProdUnit(override val node: Node<Any>) : NodeProperty<Any> {
     val queuingPolicy: QueuingPolicy<Step> = ExecuteFirstPolicy()
 
     override fun cloneOnNewNode(node: Node<Any>): NodeProperty<Any> {
-        return ProdUnit(idCode, node)
+        return ProdUnit(node)
     }
 
-    var waitingList: List<Step> = listOf(Step("Step1"), Step("Step2"), Step("Step3"))
+    var waitingList: List<Step> = listOf()
 
     fun addStepToWaitingList(step: Step) {
         if(step.state == StepState.TOBEASSIGNED) {
@@ -18,8 +18,12 @@ class ProdUnit(val idCode: String, override val node: Node<Any>) : NodeProperty<
         }
     }
 
-    fun executeFromWaitingList(){
-        queuingPolicy.getNext(waitingList)
-        println("ProdUnit: " + node.id + " executed step")
+    fun executeFromWaitingList() {
+        if (waitingList.isEmpty())
+            return
+
+        val stepId = queuingPolicy.getNext(waitingList).idCode
+        waitingList = waitingList.filter { it.idCode != stepId }
+        println("ProdUnit: " + node.id + " executed step: " + stepId)
     }
 }
