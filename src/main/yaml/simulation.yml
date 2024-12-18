@@ -12,13 +12,13 @@ network-model:
 #
 
 _prodUnitsProgram: &prodUnitsProgram
-  - time-distribution: 2
+  - time-distribution: 1
     type: Event
     actions:
       - type: model.RunOneStep
         parameters: 1
 
-  - time-distribution: 1
+  - time-distribution: 2
     type: Event
     actions:
       - type: model.StepGenerator
