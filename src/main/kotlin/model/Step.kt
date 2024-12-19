@@ -1,27 +1,20 @@
 package model
 
-import it.unibo.alchemist.model.*
-import it.unibo.alchemist.model.reactions.Event
-import org.danilopianini.util.ListSet
-import kotlin.time.Duration
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
-
 class Step (
     val idCode: String,
+    private val recipeParent: Recipe,
     var type: StepType,
-    var state: StepState = StepState.TOBEASSIGNED) {
+    var state: State = State.TOBEASSIGNED) {
 
     fun execute() {
-        state = StepState.RUNNING
+        state = State.RUNNING
         //Thread.sleep(type.time.toDuration(DurationUnit.SECONDS).inWholeMilliseconds)
-        state = StepState.COMPLETE
+        state = State.COMPLETE
+        if(recipeParent.steps.all { it.state == State.COMPLETE }) {
+            recipeParent.state = State.COMPLETE
+        }
+        if (recipeParent.orderParent.recipes.all { it.state == State.COMPLETE }) {
+            recipeParent.orderParent.state = State.COMPLETE
+        }
     }
-}
-
-enum class StepState {
-    TOBEASSIGNED,
-    ASSIGNED,
-    RUNNING,
-    COMPLETE
 }

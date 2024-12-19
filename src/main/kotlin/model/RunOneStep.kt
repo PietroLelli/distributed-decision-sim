@@ -8,8 +8,7 @@ import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 
 class RunOneStep(node: Node<Any>, val paramExample: Int): AbstractAction<Any>(node) {
-
-    val prodUnit: ProdUnit = node.asProperty()
+    private val prodUnit: ProdUnit = node.asProperty()
 
     override fun cloneAction(node: Node<Any>?, reaction: Reaction<Any>?): Action<Any> {
         TODO("Not yet implemented")

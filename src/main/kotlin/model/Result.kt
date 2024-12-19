@@ -1,4 +1,3 @@
 package model
 
-class Result (val idCode: String){
-}
+class Result (val idCode: String)
