@@ -1,15 +1,13 @@
 incarnation: protelis
+
+environment:
+  - type: model.MyEnvironment
+
 network-model:
   type: FullyConnected
 
-#_program2: &program2
-#  - time-distribution: 1
-#    program: org:protelis:tutorial:executeFromWaitingList
-
-#_program2: &program2
-#  - time-distribution: 1
-#    program: org:protelis:tutorial:distanceTo
-#
+_environment: &environment
+  - type: model.MyEnvironment
 
 _prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 5
@@ -23,13 +21,18 @@ _prodUnitsProgram: &prodUnitsProgram
     actions:
       - type: model.OrderGenerator
 
+  - time-distribution: 5
+    type: Event
+    actions:
+      - type: model.AssignStepToProdUnit
+
 _prodUnits: &prodUnits
   - type: Point
     parameters: [ 0, 0 ]
     properties:
         - type: model.ProdUnit
     contents:
-      - { molecule: prodUnit }
+      - molecule: prodUnit
     programs:
       - *prodUnitsProgram
 
@@ -38,18 +41,18 @@ _prodUnits: &prodUnits
     properties:
       - type: model.ProdUnit
     contents:
-      - { molecule: prodUnit }
+      - molecule: prodUnit
     programs:
       - *prodUnitsProgram
-
-  - type: Point
-    parameters: [ 0.2, 0 ]
-    properties:
-      - type: model.ProdUnit
-    contents:
-      - { molecule: prodUnit }
-    programs:
-      - *prodUnitsProgram
+#
+#  - type: Point
+#    parameters: [ 0.2, 0 ]
+#    properties:
+#      - type: model.ProdUnit
+#    contents:
+#      - molecule: prodUnit
+#    programs:
+#      - *prodUnitsProgram
 
 deployments:
   *prodUnits
