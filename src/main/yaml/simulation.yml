@@ -1,13 +1,13 @@
 incarnation: protelis
 
 environment:
-  - type: model.MyEnvironment
+  - type: model.DistributedDecisionEnvironment
 
 network-model:
   type: FullyConnected
 
 _environment: &environment
-  - type: model.MyEnvironment
+  - type: model.DistributedDecisionEnvironment
 
 _prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 5

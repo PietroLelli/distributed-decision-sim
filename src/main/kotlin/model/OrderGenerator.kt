@@ -15,26 +15,15 @@ class OrderGenerator (node: Node<Any>, val environment: DistributedDecisionEnvir
         val order = Order(
             "Order" + (0..100).random(),
             recipes = listOf(),
-            state = State.TOBEASSIGNED,
+            priority = (1..2).random(),
+            environment = environment,
+            state = State.TOBEASSIGNED
         )
         for (i in 0..(0..5).random()) {
             recipeList.addLast(RecipeGenerator.generateRecipe(order))
         }
         order.recipes = recipeList
         return order
-    }
-
-    //TODO DA METTERE IN UN'ALTRA ACTION
-    private fun getNextStepToAssign(): Step? {
-//        val order = orders.firstOrNull { order -> order.state != State.COMPLETE }
-//        val recipe = order?.recipes?.firstOrNull { recipe -> recipe.state != State.COMPLETE }
-//        val step = recipe?.steps?.firstOrNull { step -> step.state == State.TOBEASSIGNED }
-//
-//        if (step != null) {
-//            println("StepToAssign: "+step.idCode)
-//        }
-//        return step
-        return null
     }
 
     override fun cloneAction(p0: Node<Any>?, p1: Reaction<Any>?): Action<Any> {

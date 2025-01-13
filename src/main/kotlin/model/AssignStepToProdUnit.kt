@@ -11,7 +11,11 @@ class AssignStepToProdUnit (node: Node<Any>, val environment: DistributedDecisio
     private val prodUnit: ProdUnit = node.asProperty()
 
     private fun getNextStepToAssign(): Step? {
-        val order = environment.orders.firstOrNull { order -> order.state != State.COMPLETE }
+        val order = environment.orders
+            .firstOrNull { it.state != State.COMPLETE }
+        //con priorità sull'ordine
+//            .filter { it.state != State.COMPLETE }
+//            .maxByOrNull { it.priority }
         val recipe = order?.recipes?.firstOrNull { recipe -> recipe.state != State.COMPLETE }
         val step = recipe?.steps?.firstOrNull { step -> step.state == State.TOBEASSIGNED }
 

@@ -1,8 +1,9 @@
 package model
 
-class Order (val idCode: String, var recipes: List<Recipe>, var state: State = State.TOBEASSIGNED) {
+class Order (val idCode: String, var recipes: List<Recipe>, var priority: Int = 1, val environment: DistributedDecisionEnvironment<Any>, var state: State = State.TOBEASSIGNED) {
+
     fun printOrder() {
-        println("Order $idCode - $state")
+        println("Order $idCode - $state - Priority: $priority")
         recipes.forEach { recipe ->
             println("\tRecipe ${recipe.idCode} - ${recipe.state}")
             recipe.steps.forEach { step ->

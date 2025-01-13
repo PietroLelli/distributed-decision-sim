@@ -1,6 +1,7 @@
 package model
 
 import it.unibo.alchemist.model.*
+import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.alchemist.model.positions.Euclidean2DPosition
 import org.apache.commons.math3.random.RandomGenerator
 
@@ -9,17 +10,15 @@ class DistributedDecisionIncarnation : Incarnation<Any?, Euclidean2DPosition> {
         TODO("Not yet implemented")
     }
 
-    override fun createMolecule(s: String?): Molecule {
+    override fun createMolecule(s: String): Molecule {
+        return SimpleMolecule(s)
+    }
+
+    override fun createConcentration(s: Any?): Any? {
         TODO("Not yet implemented")
     }
 
-    override fun createConcentration(descriptor: Any?): Any? {
-        TODO("Not yet implemented")
-    }
-
-    override fun createConcentration(): Any? {
-        TODO("Not yet implemented")
-    }
+    override fun createConcentration(): Any = Any()
 
     override fun createAction(
         randomGenerator: RandomGenerator?,
