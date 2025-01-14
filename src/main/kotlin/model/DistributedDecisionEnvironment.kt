@@ -6,6 +6,9 @@ import it.unibo.alchemist.model.positions.Euclidean2DPosition
 class DistributedDecisionEnvironment<T>(incarnation: Incarnation<T, Euclidean2DPosition>): Continuous2DEnvironment<T>(incarnation) {
     val orders = mutableListOf<Order>()
     val results = mutableListOf<Result>()
+    val completedOrders = mutableListOf<Order>()
+    var totCost : Double = 0.0
+    var totTime : Double = 0.0
 
     fun addOrder(order: Order) {
         orders.add(order)
