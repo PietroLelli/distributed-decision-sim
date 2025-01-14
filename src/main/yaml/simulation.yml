@@ -6,9 +6,6 @@ environment:
 network-model:
   type: FullyConnected
 
-_environment: &environment
-  - type: model.DistributedDecisionEnvironment
-
 _prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 5
     type: Event
@@ -31,28 +28,21 @@ _prodUnits: &prodUnits
     parameters: [ 0, 0 ]
     properties:
         - type: model.ProdUnit
+          parameters: ['SIMPLE']
     contents:
       - molecule: prodUnit
     programs:
       - *prodUnitsProgram
 
   - type: Point
-    parameters: [ 0.1, 0.1 ]
+    parameters: [ 0, 0 ]
     properties:
       - type: model.ProdUnit
+        parameters: [ 'COMPLEX' ]
     contents:
       - molecule: prodUnit
     programs:
       - *prodUnitsProgram
-#
-#  - type: Point
-#    parameters: [ 0.2, 0 ]
-#    properties:
-#      - type: model.ProdUnit
-#    contents:
-#      - molecule: prodUnit
-#    programs:
-#      - *prodUnitsProgram
 
 deployments:
   *prodUnits

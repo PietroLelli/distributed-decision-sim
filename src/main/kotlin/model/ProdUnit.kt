@@ -3,13 +3,25 @@ package model
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.NodeProperty
 
-class ProdUnit(override val node: Node<Any>) : NodeProperty<Any> {
+class ProdUnit(override val node: Node<Any>, val capabilities: String) : NodeProperty<Any> {
+
     override fun cloneOnNewNode(node: Node<Any>): NodeProperty<Any> {
-        return ProdUnit(node)
+        return ProdUnit(node, capabilities)
     }
 
     private var waitingList: List<Step> = listOf()
     private val queuingPolicy: QueuingPolicy<Step> = ExecuteFirstPolicy()
+
+    fun isCapableOfExecute(step: Step): Boolean {
+        if(capabilities == "ALL") {
+            return true
+        } else if (capabilities == "COMPLEX" && step.type == StepType.TYPE_C) {
+            return true
+        } else if (capabilities == "SIMPLE" && step.type == StepType.TYPE_S) {
+            return true
+        }
+        return false
+    }
 
     fun addStepToWaitingList(step: Step) {
         if(step.state == State.TOBEASSIGNED) {

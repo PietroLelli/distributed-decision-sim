@@ -11,17 +11,19 @@ class AssignStepToProdUnit (node: Node<Any>, val environment: DistributedDecisio
     private val prodUnit: ProdUnit = node.asProperty()
 
     private fun getNextStepToAssign(): Step? {
-        val order = environment.orders
-            .firstOrNull { it.state != State.COMPLETE }
-        //con priorità sull'ordine
-//            .filter { it.state != State.COMPLETE }
-//            .maxByOrNull { it.priority }
-        val recipe = order?.recipes?.firstOrNull { recipe -> recipe.state != State.COMPLETE }
-        val step = recipe?.steps?.firstOrNull { step -> step.state == State.TOBEASSIGNED }
+        val step = environment.orders
+            .asSequence()
+            .filter { it.state != State.COMPLETE }
+            .flatMap { it.recipes }
+            .filter { it.state != State.COMPLETE }
+            .flatMap { it.steps }
+            .firstOrNull { s -> prodUnit.isCapableOfExecute(s) && s.state == State.TOBEASSIGNED }
 
-        if (step != null) {
-            println("StepToAssign: "+step.idCode)
-        }
+//        if (step != null) {
+//            println("StepToAssign: "+step.idCode)
+//        } else {
+//            println("No step to assign")
+//        }
         return step
     }
 
