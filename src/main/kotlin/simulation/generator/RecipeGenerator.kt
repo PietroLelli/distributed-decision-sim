@@ -1,4 +1,9 @@
-package model
+package simulation.generator
+
+import simulation.model.Order
+import simulation.model.Recipe
+import simulation.model.Result
+import simulation.model.Step
 
 object RecipeGenerator {
     fun generateRecipe(orderParent: Order): Recipe {

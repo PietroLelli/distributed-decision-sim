@@ -1,4 +1,4 @@
-package model
+package simulation.model
 
 enum class State {
     TOBEASSIGNED,

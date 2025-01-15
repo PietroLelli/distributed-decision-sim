@@ -1,4 +1,4 @@
-package model
+package simulation.action
 
 import it.unibo.alchemist.model.Action
 import it.unibo.alchemist.model.Context
@@ -6,8 +6,12 @@ import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.Node.Companion.asProperty
 import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
+import simulation.DistributedDecisionEnvironment
+import simulation.model.ProdUnit
+import simulation.model.State
+import simulation.model.Step
 
-class AssignStepToProdUnit (node: Node<Any>, val environment: DistributedDecisionEnvironment<Any>) : AbstractAction<Any>(node) {
+class AssignStepToProdUnitAction (node: Node<Any>, val environment: DistributedDecisionEnvironment<Any>) : AbstractAction<Any>(node) {
     private val prodUnit: ProdUnit = node.asProperty()
 
     private fun getNextStepToAssign(): Step? {
@@ -18,12 +22,6 @@ class AssignStepToProdUnit (node: Node<Any>, val environment: DistributedDecisio
             .filter { it.state != State.COMPLETE }
             .flatMap { it.steps }
             .firstOrNull { s -> prodUnit.isCapableOfExecute(s) && s.state == State.TOBEASSIGNED }
-
-//        if (step != null) {
-//            println("StepToAssign: "+step.idCode)
-//        } else {
-//            println("No step to assign")
-//        }
         return step
     }
 

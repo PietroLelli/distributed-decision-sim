@@ -1,4 +1,4 @@
-package model
+package simulation
 
 import it.unibo.alchemist.model.*
 import it.unibo.alchemist.model.molecules.SimpleMolecule

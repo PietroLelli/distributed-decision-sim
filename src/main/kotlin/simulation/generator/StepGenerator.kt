@@ -1,4 +1,8 @@
-package model
+package simulation.generator
+
+import simulation.model.Recipe
+import simulation.model.Step
+import simulation.model.StepType
 
 object StepGenerator {
     fun generateStep(recipeParent: Recipe): Step {

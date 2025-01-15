@@ -1,10 +1,13 @@
-package model
+package simulation.model
+
+import simulation.DistributedDecisionEnvironment
 
 class Step (
     val idCode: String,
     private val recipeParent: Recipe,
     var type: StepType,
-    var state: State = State.TOBEASSIGNED) {
+    var state: State = State.TOBEASSIGNED
+) {
 
     fun execute() {
         val orderParent = recipeParent.orderParent

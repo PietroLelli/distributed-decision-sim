@@ -1,7 +1,7 @@
 incarnation: protelis
 
 environment:
-  - type: model.DistributedDecisionEnvironment
+  - type: simulation.DistributedDecisionEnvironment
 
 network-model:
   type: FullyConnected
@@ -10,24 +10,24 @@ _prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 5
     type: Event
     actions:
-      - type: model.RunOneStep
+      - type: simulation.action.RunOneStepAction
         parameters: 1
 
   - time-distribution: 1
     type: Event
     actions:
-      - type: model.OrderGenerator
+      - type: simulation.action.OrderGeneratorAction
 
   - time-distribution: 5
     type: Event
     actions:
-      - type: model.AssignStepToProdUnit
+      - type: simulation.action.AssignStepToProdUnitAction
 
 _prodUnits: &prodUnits
   - type: Point
     parameters: [ 0, 0 ]
     properties:
-        - type: model.ProdUnit
+        - type: simulation.model.ProdUnit
           parameters: [["A", "B"]]
     contents:
       - molecule: prodUnit
@@ -37,7 +37,7 @@ _prodUnits: &prodUnits
   - type: Point
     parameters: [ 0, 0 ]
     properties:
-      - type: model.ProdUnit
+      - type: simulation.model.ProdUnit
         parameters: [ [ "B" ] ]
     contents:
       - molecule: prodUnit
@@ -47,7 +47,7 @@ _prodUnits: &prodUnits
   - type: Point
     parameters: [ 0, 0 ]
     properties:
-      - type: model.ProdUnit
+      - type: simulation.model.ProdUnit
         parameters: [ [ "C" ] ]
     contents:
       - molecule: prodUnit

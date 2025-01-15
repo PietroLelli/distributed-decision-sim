@@ -1,9 +1,11 @@
-package model
+package simulation.model
 
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.NodeProperty
+import simulation.policy.ExecuteFirstPolicy
+import simulation.policy.QueuingPolicy
 
-class ProdUnit(override val node: Node<Any>, val capabilities: List<String>) : NodeProperty<Any> {
+class ProdUnit(override val node: Node<Any>, private val capabilities: List<String>) : NodeProperty<Any> {
 
     override fun cloneOnNewNode(node: Node<Any>): NodeProperty<Any> {
         return ProdUnit(node, capabilities)
@@ -13,17 +15,13 @@ class ProdUnit(override val node: Node<Any>, val capabilities: List<String>) : N
     private val queuingPolicy: QueuingPolicy<Step> = ExecuteFirstPolicy()
 
     fun isCapableOfExecute(step: Step): Boolean {
-        println("Capabilities: ${capabilities.size}")
-        if(capabilities.contains("ALL")) {
-            return true
-        } else if (capabilities.contains("A") && step.type == StepType.TYPE_A) {
-            return true
-        } else if (capabilities.contains("B") && step.type == StepType.TYPE_B) {
-            return true
-        } else if (capabilities.contains("C") && step.type == StepType.TYPE_C) {
-            return true
+        return when {
+            "ALL" in capabilities -> true
+            "A" in capabilities && step.type == StepType.TYPE_A -> true
+            "B" in capabilities && step.type == StepType.TYPE_B -> true
+            "C" in capabilities && step.type == StepType.TYPE_C -> true
+            else -> false
         }
-        return false
     }
 
     fun addStepToWaitingList(step: Step) {
@@ -38,10 +36,6 @@ class ProdUnit(override val node: Node<Any>, val capabilities: List<String>) : N
         if (step != null) {
             step.execute()
             waitingList = waitingList.filter { it.idCode != step.idCode }
-            //println("ProdUnit: " + node.id + " executed step: " + step.idCode)
         }
-//        else {
-//            println("ProdUnit: " + node.id + " has no steps to execute")
-//        }
     }
 }

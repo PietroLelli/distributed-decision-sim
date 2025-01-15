@@ -1,7 +1,9 @@
-package model
+package simulation
 import it.unibo.alchemist.model.*
 import it.unibo.alchemist.model.environments.Continuous2DEnvironment
 import it.unibo.alchemist.model.positions.Euclidean2DPosition
+import simulation.model.Order
+import simulation.model.Result
 
 class DistributedDecisionEnvironment<T>(incarnation: Incarnation<T, Euclidean2DPosition>): Continuous2DEnvironment<T>(incarnation) {
     val orders = mutableListOf<Order>()

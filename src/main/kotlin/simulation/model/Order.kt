@@ -1,4 +1,6 @@
-package model
+package simulation.model
+
+import simulation.DistributedDecisionEnvironment
 
 class Order (val idCode: String, var recipes: List<Recipe>, var priority: Int = 1, val environment: DistributedDecisionEnvironment<Any>, var state: State = State.TOBEASSIGNED) {
 
