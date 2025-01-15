@@ -28,7 +28,7 @@ _prodUnits: &prodUnits
     parameters: [ 0, 0 ]
     properties:
         - type: model.ProdUnit
-          parameters: ['SIMPLE']
+          parameters: [["A", "B"]]
     contents:
       - molecule: prodUnit
     programs:
@@ -38,7 +38,17 @@ _prodUnits: &prodUnits
     parameters: [ 0, 0 ]
     properties:
       - type: model.ProdUnit
-        parameters: [ 'COMPLEX' ]
+        parameters: [ [ "B" ] ]
+    contents:
+      - molecule: prodUnit
+    programs:
+      - *prodUnitsProgram
+
+  - type: Point
+    parameters: [ 0, 0 ]
+    properties:
+      - type: model.ProdUnit
+        parameters: [ [ "C" ] ]
     contents:
       - molecule: prodUnit
     programs:

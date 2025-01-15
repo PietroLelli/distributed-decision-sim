@@ -3,7 +3,7 @@ package model
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.NodeProperty
 
-class ProdUnit(override val node: Node<Any>, val capabilities: String) : NodeProperty<Any> {
+class ProdUnit(override val node: Node<Any>, val capabilities: List<String>) : NodeProperty<Any> {
 
     override fun cloneOnNewNode(node: Node<Any>): NodeProperty<Any> {
         return ProdUnit(node, capabilities)
@@ -13,11 +13,14 @@ class ProdUnit(override val node: Node<Any>, val capabilities: String) : NodePro
     private val queuingPolicy: QueuingPolicy<Step> = ExecuteFirstPolicy()
 
     fun isCapableOfExecute(step: Step): Boolean {
-        if(capabilities == "ALL") {
+        println("Capabilities: ${capabilities.size}")
+        if(capabilities.contains("ALL")) {
             return true
-        } else if (capabilities == "COMPLEX" && step.type == StepType.TYPE_C) {
+        } else if (capabilities.contains("A") && step.type == StepType.TYPE_A) {
             return true
-        } else if (capabilities == "SIMPLE" && step.type == StepType.TYPE_S) {
+        } else if (capabilities.contains("B") && step.type == StepType.TYPE_B) {
+            return true
+        } else if (capabilities.contains("C") && step.type == StepType.TYPE_C) {
             return true
         }
         return false
