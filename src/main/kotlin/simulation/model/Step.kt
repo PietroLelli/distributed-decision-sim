@@ -23,6 +23,20 @@ class Step (
         }
     }
 
+    fun enoughResources(environment: DistributedDecisionEnvironment<Any>): Boolean {
+        var enoughResources = true
+        val neededResources = mutableMapOf<Resource, Int>()
+        requiredResources.forEach { (resource, quantity) ->
+            val matchingResource = environment.warehouse.resources.keys.find { it.idCode == resource.idCode }
+            if (matchingResource != null && environment.warehouse.resources[matchingResource]!! >= quantity) {
+                neededResources += Pair(matchingResource, quantity)
+            } else {
+                enoughResources = false
+            }
+        }
+        return enoughResources
+    }
+
     private fun completeStep(environment: DistributedDecisionEnvironment<Any>) {
         var enoughResources = true
         val neededResources = mutableMapOf<Resource, Int>()
