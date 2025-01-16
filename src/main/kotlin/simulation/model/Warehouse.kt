@@ -12,12 +12,13 @@ class Warehouse (val idCode: String) {
             results += Pair(result, 1)
         }    }
 
-    fun addResource(resource: Resource) {
-        if (resources.containsKey(resource)) {
-            val oldQuantity = resources.getValue(resource)
-            resources += Pair(resource, oldQuantity + 1)
+    fun addResource(resourceId: String, quantity: Int) {
+        val matchingResource = resources.keys.find { it.idCode == resourceId }
+        if (matchingResource != null) {
+            val oldQuantity = resources[matchingResource]!!
+            resources[matchingResource] = oldQuantity + quantity
         } else {
-            resources += Pair(resource, 1)
+            resources += Pair(Resource(resourceId), quantity)
         }
     }
 

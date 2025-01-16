@@ -21,14 +21,7 @@ class AddResourceToWarehouseAction (node: Node<Any>, val environment: Distribute
     override fun execute() {
         val randomResource = listOf(Resource("Resource1"), Resource("Resource2"), Resource("Resource3")).random()
         val randomQuantity = (1..5).random()
-        val matchingResource = environment.warehouse.resources.keys.find { it.idCode == randomResource.idCode }
-
-        if (matchingResource != null) {
-            val oldQuantity = environment.warehouse.resources[matchingResource]!!
-            environment.warehouse.resources[matchingResource] = oldQuantity + randomQuantity
-        } else {
-            environment.warehouse.resources += Pair(randomResource, randomQuantity)
-        }
+        environment.warehouse.addResource(randomResource.idCode, randomQuantity)
         //println("Added $randomQuantity of ${randomResource.idCode} to warehouse")
         environment.warehouse.printResources()
     }
