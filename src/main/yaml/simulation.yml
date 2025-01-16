@@ -17,18 +17,24 @@ _prodUnitsProgram: &prodUnitsProgram
     type: Event
     actions:
       - type: simulation.action.OrderGeneratorAction
+        parameters: ["true"] #false = No requiredResources in Step. true = requiredResources in Step
+
+  - time-distribution: 8
+    type: Event
+    actions:
+      - type: simulation.action.AssignStepToProdUnitAction
 
   - time-distribution: 5
     type: Event
     actions:
-      - type: simulation.action.AssignStepToProdUnitAction
+      - type: simulation.action.AddResourceToWarehouseAction
 
 _prodUnits: &prodUnits
   - type: Point
     parameters: [ 0, 0 ]
     properties:
         - type: simulation.model.ProdUnit
-          parameters: [["A", "B"]]
+          parameters: [["A"]]
     contents:
       - molecule: prodUnit
     programs:
@@ -56,3 +62,7 @@ _prodUnits: &prodUnits
 
 deployments:
   *prodUnits
+
+#terminate:
+#  - type: AfterTime
+#    parameters: 30

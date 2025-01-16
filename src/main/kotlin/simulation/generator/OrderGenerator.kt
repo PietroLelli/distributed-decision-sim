@@ -6,7 +6,7 @@ import simulation.model.Recipe
 import simulation.model.State
 
 object OrderGenerator {
-    fun generateOrder(environment: DistributedDecisionEnvironment<Any>): Order {
+    fun generateOrder(environment: DistributedDecisionEnvironment<Any>, useResourceBoolean: Boolean): Order {
         val recipeList = mutableListOf<Recipe>()
         val order = Order(
             "Order" + (0..100).random(),
@@ -16,7 +16,7 @@ object OrderGenerator {
             state = State.TOBEASSIGNED
         )
         for (i in 0..(0..5).random()) {
-            recipeList.addLast(RecipeGenerator.generateRecipe(order))
+            recipeList.addLast(RecipeGenerator.generateRecipe(order, useResourceBoolean))
         }
         order.recipes = recipeList
         return order

@@ -6,6 +6,7 @@ class Step (
     val idCode: String,
     private val recipeParent: Recipe,
     var type: StepType,
+    val requiredResources: MutableMap<Resource, Int> = mutableMapOf(),
     var state: State = State.TOBEASSIGNED
 ) {
 
@@ -23,15 +24,32 @@ class Step (
     }
 
     private fun completeStep(environment: DistributedDecisionEnvironment<Any>) {
-        state = State.COMPLETE
-        environment.totCost += type.cost
-        environment.totTime += type.time
+        var enoughResources = true
+        val neededResources = mutableMapOf<Resource, Int>()
+        requiredResources.forEach { (resource, quantity) ->
+            val matchingResource = environment.warehouse.resources.keys.find { it.idCode == resource.idCode }
+            if (matchingResource != null && environment.warehouse.resources[matchingResource]!! >= quantity) {
+                neededResources += Pair(matchingResource, quantity)
+            } else {
+                enoughResources = false
+            }
+        }
+        if (enoughResources) {
+            neededResources.forEach { (resource, quantity) ->
+                environment.warehouse.getResource(resource, quantity)
+            }
+            state = State.COMPLETE
+            environment.totCost += type.cost
+            environment.totTime += type.time
+        }
     }
+
     private fun completeRecipe(environment: DistributedDecisionEnvironment<Any>) {
         recipeParent.state = State.COMPLETE
         environment.results.add(recipeParent.result)
-        environment.results.forEach { println("ADDED result: ${it.idCode} ") }
+        //environment.results.forEach { println("ADDED result: ${it.idCode} ") }
     }
+
     private fun completeOrder(environment: DistributedDecisionEnvironment<Any>) {
         recipeParent.orderParent.state = State.COMPLETE
         environment.completedOrders.add(recipeParent.orderParent)

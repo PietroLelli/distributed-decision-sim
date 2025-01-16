@@ -9,7 +9,10 @@ class Order (val idCode: String, var recipes: List<Recipe>, var priority: Int = 
         recipes.forEach { recipe ->
             println("\tRecipe ${recipe.idCode} - ${recipe.state}")
             recipe.steps.forEach { step ->
-                println("\t\tStep ${step.idCode} - ${step.state} - ${step.type}")
+                println("\t\tStep ${step.idCode} - ${step.state} - ${step.type} ")
+                step.requiredResources.forEach { (resource, quantity) ->
+                    println("\t\t\t${resource.idCode} - $quantity")
+                }
             }
         }
     }

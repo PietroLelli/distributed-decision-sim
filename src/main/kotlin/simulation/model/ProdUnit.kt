@@ -2,13 +2,14 @@ package simulation.model
 
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.NodeProperty
+import simulation.DistributedDecisionEnvironment
 import simulation.policy.ExecuteFirstPolicy
 import simulation.policy.QueuingPolicy
 
-class ProdUnit(override val node: Node<Any>, private val capabilities: List<String>) : NodeProperty<Any> {
+class ProdUnit(override val node: Node<Any>, val environment: DistributedDecisionEnvironment<Any>, private val capabilities: List<String>) : NodeProperty<Any> {
 
     override fun cloneOnNewNode(node: Node<Any>): NodeProperty<Any> {
-        return ProdUnit(node, capabilities)
+        return ProdUnit(node, environment, capabilities)
     }
 
     private var waitingList: List<Step> = listOf()
@@ -32,10 +33,14 @@ class ProdUnit(override val node: Node<Any>, private val capabilities: List<Stri
     }
 
     fun executeFromWaitingList() {
+        //todo aggiungere che la prodUnit deve avere anche le risorse necessarie nella condizione per trovare il prossimo step da eseguire
         val step = queuingPolicy.getNext(waitingList) { step -> step.state == State.ASSIGNED }
         if (step != null) {
             step.execute()
             waitingList = waitingList.filter { it.idCode != step.idCode }
+
+            println("\nProdUnit ${node.id} execute step: ${step.idCode}")
+            environment.orders.forEach(Order::printOrder)
         }
     }
 }
