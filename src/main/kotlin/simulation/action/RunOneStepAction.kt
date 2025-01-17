@@ -7,7 +7,6 @@ import it.unibo.alchemist.model.Node.Companion.asProperty
 import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 import simulation.DistributedDecisionEnvironment
-import simulation.model.Order
 import simulation.model.ProdUnit
 
 class RunOneStepAction(node: Node<Any>, val environment: DistributedDecisionEnvironment<Any>): AbstractAction<Any>(node) {

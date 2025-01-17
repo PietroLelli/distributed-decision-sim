@@ -6,6 +6,9 @@ environment:
 network-model:
   type: FullyConnected
 
+_resources: &resources
+  ["Resource0", "Resource1", "Resource2"]
+
 _prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 5
     type: Event
@@ -17,7 +20,7 @@ _prodUnitsProgram: &prodUnitsProgram
     type: Event
     actions:
       - type: simulation.action.OrderGeneratorAction
-        parameters: ["true"] #false = No requiredResources in Step. true = requiredResources in Step
+        parameters: [*resources]
 
   - time-distribution: 8
     type: Event
@@ -28,6 +31,7 @@ _prodUnitsProgram: &prodUnitsProgram
     type: Event
     actions:
       - type: simulation.action.AddResourceToWarehouseAction
+        parameters: [*resources]
 
 _prodUnits: &prodUnits
   - type: Point

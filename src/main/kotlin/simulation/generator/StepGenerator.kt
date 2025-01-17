@@ -6,11 +6,10 @@ import simulation.model.Step
 import simulation.model.StepType
 
 object StepGenerator {
-    fun generateStep(recipeParent: Recipe, useResourceBoolean: Boolean): Step {
-        var requiredResources: MutableMap<Resource, Int> = mutableMapOf()
-        if (useResourceBoolean) {
-            val randomResource = listOf(Resource("Resource1"), Resource("Resource2"), Resource("Resource3")).random()
-            requiredResources = mutableMapOf(randomResource to (1..5).random())
+    fun generateStep(recipeParent: Recipe, resourceIds: List<String>): Step {
+        val requiredResources: MutableMap<Resource, Int> = mutableMapOf()
+        if (resourceIds.isNotEmpty()) {
+            requiredResources[Resource(resourceIds.random())] = (1..5).random()
         }
 
         return Step(
