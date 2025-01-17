@@ -6,49 +6,40 @@ class Step (
     val idCode: String,
     private val recipeParent: Recipe,
     var type: StepType,
+    private val environment: DistributedDecisionEnvironment<Any>,
     val requiredResources: MutableMap<Resource, Int> = mutableMapOf(),
     var state: State = State.TOBEASSIGNED
 ) {
 
     fun execute() {
         val orderParent = recipeParent.orderParent
-        val environment = orderParent.environment
 
-        completeStep(environment)
+        completeStep()
         if(recipeParent.steps.all { it.state == State.COMPLETE }) {
-            completeRecipe(environment)
+            completeRecipe()
         }
         if (orderParent.recipes.all { it.state == State.COMPLETE }) {
-            completeOrder(environment)
+            completeOrder()
         }
     }
 
-    fun enoughResources(environment: DistributedDecisionEnvironment<Any>): Boolean {
-        var enoughResources = true
+    fun checkResources(): Pair<Boolean, MutableMap<Resource, Int>> {
+        var areEnoughResources = true
         val neededResources = mutableMapOf<Resource, Int>()
         requiredResources.forEach { (resource, quantity) ->
             val matchingResource = environment.warehouse.resources.keys.find { it.idCode == resource.idCode }
             if (matchingResource != null && environment.warehouse.resources[matchingResource]!! >= quantity) {
                 neededResources += Pair(matchingResource, quantity)
             } else {
-                enoughResources = false
+                areEnoughResources = false
             }
         }
-        return enoughResources
+        return Pair(areEnoughResources, neededResources)
     }
 
-    private fun completeStep(environment: DistributedDecisionEnvironment<Any>) {
-        var enoughResources = true
-        val neededResources = mutableMapOf<Resource, Int>()
-        requiredResources.forEach { (resource, quantity) ->
-            val matchingResource = environment.warehouse.resources.keys.find { it.idCode == resource.idCode }
-            if (matchingResource != null && environment.warehouse.resources[matchingResource]!! >= quantity) {
-                neededResources += Pair(matchingResource, quantity)
-            } else {
-                enoughResources = false
-            }
-        }
-        if (enoughResources) {
+    private fun completeStep() {
+        val (areEnoughResources, neededResources) = checkResources()
+        if (areEnoughResources) {
             neededResources.forEach { (resource, quantity) ->
                 environment.warehouse.getResource(resource, quantity)
             }
@@ -58,13 +49,13 @@ class Step (
         }
     }
 
-    private fun completeRecipe(environment: DistributedDecisionEnvironment<Any>) {
+    private fun completeRecipe() {
         recipeParent.state = State.COMPLETE
-        environment.results.add(recipeParent.result)
+        environment.warehouse.addResult(recipeParent.result)
         //environment.results.forEach { println("ADDED result: ${it.idCode} ") }
     }
 
-    private fun completeOrder(environment: DistributedDecisionEnvironment<Any>) {
+    private fun completeOrder() {
         recipeParent.orderParent.state = State.COMPLETE
         environment.completedOrders.add(recipeParent.orderParent)
         environment.orders.remove(recipeParent.orderParent)

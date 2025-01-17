@@ -33,7 +33,7 @@ class ProdUnit(override val node: Node<Any>, val environment: DistributedDecisio
     }
 
     fun executeFromWaitingList() {
-        val step = queuingPolicy.getNext(waitingList) { step -> step.state == State.ASSIGNED && step.enoughResources(environment) }
+        val step = queuingPolicy.getNext(waitingList) { step -> step.state == State.ASSIGNED && step.checkResources().first }
         if (step != null) {
             step.execute()
             waitingList = waitingList.filter { it.idCode != step.idCode }

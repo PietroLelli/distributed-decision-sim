@@ -11,7 +11,7 @@ import simulation.generator.OrderGenerator
 
 class OrderGeneratorAction (node: Node<Any>, val environment: DistributedDecisionEnvironment<Any>, useResource: String) : AbstractAction<Any>(node) {
 
-    val useResourceBoolean: Boolean = useResource == "true"
+    private val useResourceBoolean: Boolean = useResource == "true"
     override fun cloneAction(p0: Node<Any>?, p1: Reaction<Any>?): Action<Any> {
         TODO("Not yet implemented")
     }

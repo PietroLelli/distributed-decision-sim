@@ -17,6 +17,7 @@ object StepGenerator {
             "Step" + (0..100).random(),
             recipeParent,
             randomStepType(),
+            recipeParent.orderParent.environment,
             requiredResources
         )
     }
