@@ -11,7 +11,6 @@ object OrderGenerator {
         val order = Order(
             "Order" + (0..100).random(),
             recipes = listOf(),
-            priority = (1..2).random(),
             environment = environment,
             state = State.TOBEASSIGNED
         )

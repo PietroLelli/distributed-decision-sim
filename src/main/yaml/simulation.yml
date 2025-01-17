@@ -7,7 +7,7 @@ network-model:
   type: FullyConnected
 
 _resources: &resources
-  ["Resource0", "Resource1", "Resource2"]
+  ["R0", "R1", "R2", "R3"]
 
 _prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 5
@@ -38,7 +38,7 @@ _prodUnits: &prodUnits
     parameters: [ 0, 0 ]
     properties:
         - type: simulation.model.ProdUnit
-          parameters: [["A"]]
+          parameters: ["ProdUnitA", ["A"]]
     contents:
       - molecule: prodUnit
     programs:
@@ -48,7 +48,7 @@ _prodUnits: &prodUnits
     parameters: [ 0, 0 ]
     properties:
       - type: simulation.model.ProdUnit
-        parameters: [ [ "B" ] ]
+        parameters: ["ProdUnitB", ["B"]]
     contents:
       - molecule: prodUnit
     programs:
@@ -58,7 +58,7 @@ _prodUnits: &prodUnits
     parameters: [ 0, 0 ]
     properties:
       - type: simulation.model.ProdUnit
-        parameters: [ [ "C" ] ]
+        parameters: ["ProdUnitC", ["C"]]
     contents:
       - molecule: prodUnit
     programs:
