@@ -21,7 +21,7 @@ _prodUnitsProgram: &prodUnitsProgram
     type: Event
     actions:
       - type: simulation.action.OrderGeneratorAction
-        parameters: [*resources]
+        parameters: [*resources, 2, 3] #[List of resources, number of recipes in order, number of steps in recipe]
 
   - time-distribution: 8
     type: Event

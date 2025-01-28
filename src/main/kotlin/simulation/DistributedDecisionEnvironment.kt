@@ -18,7 +18,7 @@ class DistributedDecisionEnvironment(incarnation: Incarnation<Any, Euclidean2DPo
     var totCost : Double = 0.0
     var totTime : Double = 0.0
 
-    fun generateOrder(resourceIds: List<String>): Order {
+    fun generateOrder(resourceIds: List<String>, numRecipesInOrder: Int, numStepInRecipe: Int) {
         val recipeList = mutableListOf<Recipe>()
         val order = Order(
             "Order" + (0..100).random(),
@@ -27,20 +27,20 @@ class DistributedDecisionEnvironment(incarnation: Incarnation<Any, Euclidean2DPo
             state = State.TOBEASSIGNED
         )
         //todo numero fisso di ricette (parametro file di configurazione yaml?)
-        for (i in 0..(0..5).random()) {
-            recipeList.addLast(generateRecipe(order, resourceIds))
+        for (i in 1..numRecipesInOrder) {
+            recipeList.addLast(generateRecipe(order, resourceIds, numStepInRecipe))
         }
         order.recipes = recipeList
-        return order
+        orders.add(order)
     }
 
-    private fun generateRecipe(orderParent: Order, resourceIds: List<String>): Recipe {
+    private fun generateRecipe(orderParent: Order, resourceIds: List<String>, numStepInRecipe: Int): Recipe {
         val stepList = mutableListOf<Step>()
         val randomRecipeValue = (0..10).random()
         val recipe = Recipe("Recipe$randomRecipeValue", orderParent, stepList, result = Result("Result$randomRecipeValue"))
 
         //todo numero fisso di step (parametro file di configurazione yaml?)
-        for (i in 0..(0..5).random()) {
+        for (i in 1 .. numStepInRecipe) {
             stepList.addLast(generateStep(recipe, resourceIds))
         }
         return recipe
