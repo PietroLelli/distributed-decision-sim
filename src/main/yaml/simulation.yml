@@ -7,8 +7,8 @@ network-model:
   type: FullyConnected
 
 _resources: &resources
-  [] #se lasciato vuoto il simulatore non utilizza le risorse (non le aggiunge al magazzino e non le assegna agli step)
-  #["R0", "R1", "R2", "R3"]
+  #[] #se lasciato vuoto il simulatore non utilizza le risorse (non le aggiunge al magazzino e non le assegna agli step)
+  ["R0", "R1", "R2", "R3"]
 
 _prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 5

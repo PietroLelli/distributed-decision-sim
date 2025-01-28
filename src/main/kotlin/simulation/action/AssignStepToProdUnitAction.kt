@@ -14,7 +14,6 @@ class AssignStepToProdUnitAction (node: Node<Any>, val environment: DistributedD
     private val prodUnit: ProdUnit = node.asProperty()
 
     private fun assignNextStep() {
-        //environment.nodes.mapNotNull { it.asProperty<T, ProdUnit>() }.first()
         environment.orders
             .asSequence()
             .filter { it.state != State.COMPLETE }
@@ -28,19 +27,14 @@ class AssignStepToProdUnitAction (node: Node<Any>, val environment: DistributedD
     private fun assignStepToProdUnitWithShortWaitingList() {
         val prodUnitToAssign = environment.nodes.mapNotNull { it.asProperty<Any, ProdUnit>() }
             .minByOrNull { it.waitingList.size }
-         val step = environment.orders
+        environment.orders
             .asSequence()
             .filter { it.state != State.COMPLETE }
             .flatMap { it.recipes }
             .filter { it.state != State.COMPLETE }
             .flatMap { it.steps }
             .firstOrNull { s -> s.state == State.TOBEASSIGNED && prodUnitToAssign?.isCapableOfExecute(s) == true }
-//            ?.let { prodUnitToAssign?.addStepToWaitingList(it) }
-        environment.nodes.mapNotNull { it.asProperty<Any, ProdUnit>() }.forEach { println("ProdUnit ${it.idCode} waiting list size: ${it.waitingList.size}") }
-        if (step != null) {
-            prodUnitToAssign?.addStepToWaitingList(step)
-        }
-        println("ProdUnit ${prodUnit.idCode} assigned step ${step?.idCode} to ProdUnit ${prodUnitToAssign?.idCode}")
+            ?.let { prodUnitToAssign?.addStepToWaitingList(it) }
     }
 
     override fun cloneAction(p0: Node<Any>?, p1: Reaction<Any>?): Action<Any> {

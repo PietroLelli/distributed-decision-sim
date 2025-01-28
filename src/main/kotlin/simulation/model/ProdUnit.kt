@@ -38,9 +38,8 @@ class ProdUnit (override val node: Node<Any>, val environment: DistributedDecisi
             step.execute()
             waitingList = waitingList.filter { it.idCode != step.idCode }
 
-            //TODO scommentare
-            //println("\nProdUnit $idCode execute step: ${step.idCode}")
-            //environment.orders.forEach(Order::printOrder)
+            println("\nProdUnit $idCode execute step: ${step.idCode}")
+            environment.orders.forEach(Order::printOrder)
         }
     }
 }
