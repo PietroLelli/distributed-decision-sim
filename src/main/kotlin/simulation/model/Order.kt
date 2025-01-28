@@ -2,7 +2,7 @@ package simulation.model
 
 import simulation.DistributedDecisionEnvironment
 
-class Order (val idCode: String, var recipes: List<Recipe>, val environment: DistributedDecisionEnvironment<Any>, var state: State = State.TOBEASSIGNED) {
+class Order(val idCode: String, var recipes: List<Recipe>, val environment: DistributedDecisionEnvironment, var state: State = State.TOBEASSIGNED) {
 
     fun printOrder() {
         println("Order $idCode")

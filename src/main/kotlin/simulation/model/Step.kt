@@ -6,7 +6,7 @@ class Step (
     val idCode: String,
     private val recipeParent: Recipe,
     var type: StepType,
-    private val environment: DistributedDecisionEnvironment<Any>,
+    private val environment: DistributedDecisionEnvironment,
     val requiredResources: MutableMap<Resource, Int> = mutableMapOf(),
     var state: State = State.TOBEASSIGNED
 ) {

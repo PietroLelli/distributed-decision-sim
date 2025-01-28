@@ -6,9 +6,8 @@ import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 import simulation.DistributedDecisionEnvironment
-import simulation.generator.OrderGenerator
 
-class OrderGeneratorAction (node: Node<Any>, val environment: DistributedDecisionEnvironment<Any>, val resourceIds: List<String>) : AbstractAction<Any>(node) {
+class OrderGeneratorAction (val environment: DistributedDecisionEnvironment, node: Node<Any>, val resourceIds: List<String>) : AbstractAction<Any>(node) {
 
     override fun cloneAction(p0: Node<Any>?, p1: Reaction<Any>?): Action<Any> {
         TODO("Not yet implemented")
@@ -16,7 +15,7 @@ class OrderGeneratorAction (node: Node<Any>, val environment: DistributedDecisio
 
     override fun execute() {
         //println("\nEXECUTION ORDER GENERATOR PROD-UNIT: " + node.id + "\n")
-        val order = OrderGenerator.generateOrder(environment, resourceIds)
+        val order = environment.generateOrder(resourceIds)
         environment.orders.add(order)
 //        environment.orders.forEach(Order::printOrder)
     }

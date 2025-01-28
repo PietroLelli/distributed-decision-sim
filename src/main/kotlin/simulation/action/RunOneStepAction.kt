@@ -9,7 +9,7 @@ import it.unibo.alchemist.model.actions.AbstractAction
 import simulation.DistributedDecisionEnvironment
 import simulation.model.ProdUnit
 
-class RunOneStepAction(node: Node<Any>, val environment: DistributedDecisionEnvironment<Any>): AbstractAction<Any>(node) {
+class RunOneStepAction(node: Node<Any>, val environment: DistributedDecisionEnvironment): AbstractAction<Any>(node) {
     private val prodUnit: ProdUnit = node.asProperty()
 
     override fun cloneAction(node: Node<Any>?, reaction: Reaction<Any>?): Action<Any> {

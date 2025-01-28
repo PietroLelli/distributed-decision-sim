@@ -6,13 +6,13 @@ import simulation.DistributedDecisionEnvironment
 import simulation.policy.ExecuteFirstPolicy
 import simulation.policy.QueuingPolicy
 
-class ProdUnit(override val node: Node<Any>, val environment: DistributedDecisionEnvironment<Any>, val idCode: String, private val capabilities: List<String>) : NodeProperty<Any> {
+class ProdUnit (override val node: Node<Any>, val environment: DistributedDecisionEnvironment, val idCode: String, private val capabilities: List<String>) : NodeProperty<Any> {
 
     override fun cloneOnNewNode(node: Node<Any>): NodeProperty<Any> {
         return ProdUnit(node, environment, idCode, capabilities)
     }
 
-    private var waitingList: List<Step> = listOf()
+    var waitingList: List<Step> = listOf()
     private val queuingPolicy: QueuingPolicy<Step> = ExecuteFirstPolicy()
 
     fun isCapableOfExecute(step: Step): Boolean {
@@ -38,8 +38,9 @@ class ProdUnit(override val node: Node<Any>, val environment: DistributedDecisio
             step.execute()
             waitingList = waitingList.filter { it.idCode != step.idCode }
 
-            println("\nProdUnit $idCode execute step: ${step.idCode}")
-            environment.orders.forEach(Order::printOrder)
+            //TODO scommentare
+            //println("\nProdUnit $idCode execute step: ${step.idCode}")
+            //environment.orders.forEach(Order::printOrder)
         }
     }
 }
