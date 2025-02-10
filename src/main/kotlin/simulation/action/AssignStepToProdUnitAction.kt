@@ -48,7 +48,6 @@ class AssignStepToProdUnitAction (node: Node<Any>, val environment: DistributedD
             .flatMap { it.steps }
             .firstOrNull { s -> s.state == State.TOBEASSIGNED && prodUnitToAssign.isCapableOfExecute(s) }
             ?.let { prodUnitToAssign.addStepToWaitingList(it) }
-
     }
 
     override fun cloneAction(p0: Node<Any>?, p1: Reaction<Any>?): Action<Any> {

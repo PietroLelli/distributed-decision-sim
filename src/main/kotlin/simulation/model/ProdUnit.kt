@@ -43,7 +43,7 @@ class ProdUnit (
             step.execute()
             waitingList = waitingList.filter { it.idCode != step.idCode }
 //            println("\nProdUnit $idCode execute step: ${step.idCode}")
-            environment.orders.forEach(Order::printOrder)
+//            environment.orders.forEach(Order::printOrder)
             println("Result size: " + environment.warehouse.results.size)
         }
     }

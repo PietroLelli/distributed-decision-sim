@@ -73,11 +73,11 @@ _prodUnitsProgram: &prodUnitsProgram
       - type: simulation.action.OrderGeneratorAction
         parameters: [*resources, 2, 3] #[List of resources, number of recipes in order, number of steps in recipe]
 
-  - time-distribution: 6
+  - time-distribution: 5
     type: Event
     actions:
       - type: simulation.action.AssignStepToProdUnitAction
-        parameters: ["ShortWaitingList"] #routingPolicy: ["ShortWaitingList", "RandomProdUnit", "Self"(qualsiasi altro testo)]
+        parameters: ["ShortWaitingLis"] #routingPolicy: ["ShortWaitingList", "RandomProdUnit", "Self"(qualsiasi altro testo)]
 
   - time-distribution: 1
     type: Event
@@ -91,7 +91,7 @@ _prodUnits: &prodUnits
     parameters: [ 1, 0 ]
     properties:
       - type: simulation.model.ProdUnit
-        parameters: [ "ProdUnit1", [ "A" ] ]
+        parameters: [ "ProdUnit1", [ "ALL" ] ]
     contents:
       - molecule: prodUnit
     programs:
@@ -101,7 +101,7 @@ _prodUnits: &prodUnits
     parameters: [ 0, 0 ]
     properties:
       - type: simulation.model.ProdUnit
-        parameters: [ "ProdUnit2", [ "B" ] ]
+        parameters: [ "ProdUnit2", [ "ALL" ] ]
     contents:
       - molecule: prodUnit
     programs:
@@ -111,7 +111,7 @@ _prodUnits: &prodUnits
     parameters: [ 0, 0 ]
     properties:
       - type: simulation.model.ProdUnit
-        parameters: [ "ProdUnit3", [ "C" ] ]
+        parameters: [ "ProdUnit3", [ "ALL" ] ]
     contents:
       - molecule: prodUnit
     programs:
