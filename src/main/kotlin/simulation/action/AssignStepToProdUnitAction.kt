@@ -37,15 +37,37 @@ class AssignStepToProdUnitAction (node: Node<Any>, val environment: DistributedD
             ?.let { prodUnitToAssign?.addStepToWaitingList(it) }
     }
 
+    private fun assignRandomStep() {
+        val prodUnitToAssign = environment.nodes.mapNotNull { it.asProperty<Any, ProdUnit>() }
+            .random()
+        environment.orders
+            .asSequence()
+            .filter { it.state != State.COMPLETE }
+            .flatMap { it.recipes }
+            .filter { it.state != State.COMPLETE }
+            .flatMap { it.steps }
+            .firstOrNull { s -> s.state == State.TOBEASSIGNED && prodUnitToAssign.isCapableOfExecute(s) }
+            ?.let { prodUnitToAssign.addStepToWaitingList(it) }
+
+    }
+
     override fun cloneAction(p0: Node<Any>?, p1: Reaction<Any>?): Action<Any> {
         TODO("Not yet implemented")
     }
 
     override fun execute() {
-        if (routingPolicy == "ShortWaitingList")
-            assignStepToProdUnitWithShortWaitingList()
-        else
-            assignNextStep()
+        when (routingPolicy) {
+            "ShortWaitingList" -> assignStepToProdUnitWithShortWaitingList()
+            "RandomProdUnit" -> assignRandomStep()
+            else -> {
+                assignNextStep()
+            }
+        }
+        val prodUnits = environment.nodes.mapNotNull { it.asProperty<Any, ProdUnit>() }
+        prodUnits.forEach {
+            println()
+            println("ProdUnit ${it.idCode} waitingList.size: ${it.waitingList.size}}")
+        }
     }
 
     override fun getContext(): Context {

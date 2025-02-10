@@ -1,4 +1,3 @@
 package simulation.model
 
-class Resource (val idCode : String) {
-}
+class Resource (val idCode : String)

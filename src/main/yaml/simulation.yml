@@ -8,9 +8,9 @@ network-model:
 
 _resources: &resources
   #[] #se lasciato vuoto il simulatore non utilizza le risorse (non le aggiunge al magazzino e non le assegna agli step)
-  ["R0", "R1", "R2", "R3"]
+  []
 
-_prodUnitsProgram: &prodUnitsProgram
+_prodUnit1Programs: &prodUnit1Programs
   - time-distribution: 5
     type: Event
     actions:
@@ -27,48 +27,99 @@ _prodUnitsProgram: &prodUnitsProgram
     type: Event
     actions:
       - type: simulation.action.AssignStepToProdUnitAction
-        parameters: ["ShortWaitingList"] #routingPolicy: ["ShortWaitingList", "Self"(qualsiasi altro testo)]
+        parameters: ["ShortWaitingList"] #routingPolicy: ["ShortWaitingList", "RandomProdUnit", "Self"(qualsiasi altro testo)]
 
+  - time-distribution: 1
+    type: Event
+    actions:
+      - type: simulation.action.AddResourceToWarehouseAction
+        parameters: [*resources]
+
+_prodUnit2-3Programs: &prodUnit2-3Programs
   - time-distribution: 5
+    type: Event
+    actions:
+      - type: simulation.action.RunOneStepAction
+        parameters: 1
+
+  - time-distribution: 1
+    type: Event
+    actions:
+      - type: simulation.action.OrderGeneratorAction
+        parameters: [*resources, 2, 3] #[List of resources, number of recipes in order, number of steps in recipe]
+
+  - time-distribution: 2
+    type: Event
+    actions:
+      - type: simulation.action.AssignStepToProdUnitAction
+        parameters: ["ShortWaitingList"] #routingPolicy: ["ShortWaitingList", "RandomProdUnit", "Self"(qualsiasi altro testo)]
+
+  - time-distribution: 1
+    type: Event
+    actions:
+      - type: simulation.action.AddResourceToWarehouseAction
+        parameters: [*resources]
+
+_prodUnitsProgram: &prodUnitsProgram
+  - time-distribution: 5
+    type: Event
+    actions:
+      - type: simulation.action.RunOneStepAction
+        parameters: 1
+
+  - time-distribution: 1
+    type: Event
+    actions:
+      - type: simulation.action.OrderGeneratorAction
+        parameters: [*resources, 2, 3] #[List of resources, number of recipes in order, number of steps in recipe]
+
+  - time-distribution: 6
+    type: Event
+    actions:
+      - type: simulation.action.AssignStepToProdUnitAction
+        parameters: ["ShortWaitingList"] #routingPolicy: ["ShortWaitingList", "RandomProdUnit", "Self"(qualsiasi altro testo)]
+
+  - time-distribution: 1
     type: Event
     actions:
       - type: simulation.action.AddResourceToWarehouseAction
         parameters: [*resources]
 
 _prodUnits: &prodUnits
+
   - type: Point
-    parameters: [ 0, 0 ]
+    parameters: [ 1, 0 ]
     properties:
-        - type: simulation.model.ProdUnit
-          parameters: ["ProdUnitA", ["A"]]
+      - type: simulation.model.ProdUnit
+        parameters: [ "ProdUnit1", [ "A" ] ]
     contents:
       - molecule: prodUnit
     programs:
-      - *prodUnitsProgram
+      - *prodUnit1Programs
 
   - type: Point
     parameters: [ 0, 0 ]
     properties:
       - type: simulation.model.ProdUnit
-        parameters: ["ProdUnitB", ["B"]]
+        parameters: [ "ProdUnit2", [ "B" ] ]
     contents:
       - molecule: prodUnit
     programs:
-      - *prodUnitsProgram
+      - *prodUnit2-3Programs
 
   - type: Point
     parameters: [ 0, 0 ]
     properties:
       - type: simulation.model.ProdUnit
-        parameters: ["ProdUnitC", ["C"]]
+        parameters: [ "ProdUnit3", [ "C" ] ]
     contents:
       - molecule: prodUnit
     programs:
-      - *prodUnitsProgram
+      - *prodUnit2-3Programs
 
 deployments:
   *prodUnits
 
-#terminate:
-#  - type: AfterTime
-#    parameters: 30
+terminate:
+  - type: AfterTime
+    parameters: 300

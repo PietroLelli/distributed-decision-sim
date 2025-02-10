@@ -8,18 +8,17 @@ class Step (
     var type: StepType,
     private val environment: DistributedDecisionEnvironment,
     val requiredResources: MutableMap<Resource, Int> = mutableMapOf(),
-    var state: State = State.TOBEASSIGNED
-) {
+    var state: State = State.TOBEASSIGNED) {
 
     fun execute() {
         val orderParent = recipeParent.orderParent
 
         completeStep()
         if(recipeParent.steps.all { it.state == State.COMPLETE }) {
-            completeRecipe()
+            recipeParent.completeRecipe()
         }
         if (orderParent.recipes.all { it.state == State.COMPLETE }) {
-            completeOrder()
+            orderParent.completeOrder()
         }
     }
 
@@ -47,19 +46,5 @@ class Step (
             environment.totCost += type.cost
             environment.totTime += type.time
         }
-    }
-
-    private fun completeRecipe() {
-        recipeParent.state = State.COMPLETE
-        environment.warehouse.addResult(recipeParent.result)
-        //environment.results.forEach { println("ADDED result: ${it.idCode} ") }
-    }
-
-    private fun completeOrder() {
-        recipeParent.orderParent.state = State.COMPLETE
-        environment.completedOrders.add(recipeParent.orderParent)
-        environment.orders.remove(recipeParent.orderParent)
-        println("COMPLETED order: ${recipeParent.orderParent.idCode}")
-        println("TOT COST: ${environment.totCost} - TOT TIME: ${environment.totTime} - COMPLETED ORDERS: ${environment.completedOrders.size}")
     }
 }
