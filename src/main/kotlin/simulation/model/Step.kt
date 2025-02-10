@@ -8,8 +8,8 @@ class Step (
     var type: StepType,
     private val environment: DistributedDecisionEnvironment,
     val requiredResources: MutableMap<Resource, Int> = mutableMapOf(),
-    var state: State = State.TOBEASSIGNED) {
-
+    var state: State = State.TOBEASSIGNED
+) {
     fun execute() {
         val orderParent = recipeParent.orderParent
 

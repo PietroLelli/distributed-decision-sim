@@ -10,7 +10,8 @@ class ProdUnit (
     override val node: Node<Any>,
     val environment: DistributedDecisionEnvironment,
     val idCode: String,
-    private val capabilities: List<String>) : NodeProperty<Any> {
+    private val capabilities: List<String>
+) : NodeProperty<Any> {
 
     override fun cloneOnNewNode(node: Node<Any>): NodeProperty<Any> {
         return ProdUnit(node, environment, idCode, capabilities)

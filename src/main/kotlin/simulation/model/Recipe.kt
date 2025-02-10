@@ -6,8 +6,7 @@ class Recipe (
     var steps: List<Step>,
     var state: State = State.TOBEASSIGNED,
     var result: Result
-){
-
+) {
     fun completeRecipe() {
         state = State.COMPLETE
         orderParent.environment.warehouse.addResult(result)

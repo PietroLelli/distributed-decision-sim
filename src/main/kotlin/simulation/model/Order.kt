@@ -5,8 +5,8 @@ import simulation.DistributedDecisionEnvironment
 class Order(
     val idCode: String, var recipes: List<Recipe>,
     val environment: DistributedDecisionEnvironment,
-    var state: State = State.TOBEASSIGNED) {
-
+    var state: State = State.TOBEASSIGNED
+) {
     fun completeOrder() {
         state = State.COMPLETE
         environment.completedOrders.add(this)
