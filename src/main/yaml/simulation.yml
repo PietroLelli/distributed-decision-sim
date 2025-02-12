@@ -1,64 +1,24 @@
 incarnation: protelis
 
+export:
+  type: CSVExporter
+  parameters:
+    fileNameRoot: "export"
+    exportPath: "data"
+    interval: 1.0
+  data:
+    - time
+
 environment:
   - type: simulation.DistributedDecisionEnvironment
-
 network-model:
   type: FullyConnected
-
 _resources: &resources
-  #[] #se lasciato vuoto il simulatore non utilizza le risorse (non le aggiunge al magazzino e non le assegna agli step)
   []
-
-_prodUnit1Programs: &prodUnit1Programs
-  - time-distribution: 5
-    type: Event
-    actions:
-      - type: simulation.action.RunOneStepAction
-        parameters: 1
-
-  - time-distribution: 1
-    type: Event
-    actions:
-      - type: simulation.action.OrderGeneratorAction
-        parameters: [*resources, 2, 3] #[List of resources, number of recipes in order, number of steps in recipe]
-
-  - time-distribution: 8
-    type: Event
-    actions:
-      - type: simulation.action.AssignStepToProdUnitAction
-        parameters: ["ShortWaitingList"] #routingPolicy: ["ShortWaitingList", "RandomProdUnit", "Self"(qualsiasi altro testo)]
-
-  - time-distribution: 1
-    type: Event
-    actions:
-      - type: simulation.action.AddResourceToWarehouseAction
-        parameters: [*resources]
-
-_prodUnit2-3Programs: &prodUnit2-3Programs
-  - time-distribution: 5
-    type: Event
-    actions:
-      - type: simulation.action.RunOneStepAction
-        parameters: 1
-
-  - time-distribution: 1
-    type: Event
-    actions:
-      - type: simulation.action.OrderGeneratorAction
-        parameters: [*resources, 2, 3] #[List of resources, number of recipes in order, number of steps in recipe]
-
-  - time-distribution: 2
-    type: Event
-    actions:
-      - type: simulation.action.AssignStepToProdUnitAction
-        parameters: ["ShortWaitingList"] #routingPolicy: ["ShortWaitingList", "RandomProdUnit", "Self"(qualsiasi altro testo)]
-
-  - time-distribution: 1
-    type: Event
-    actions:
-      - type: simulation.action.AddResourceToWarehouseAction
-        parameters: [*resources]
+variables:
+  assign_mod: &assign_mod
+    type: ArbitraryVariable
+    parameters: [["RandomProdUnit"], ["RandomProdUnit", "Self", "ShortWaitingList"]]
 
 _prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 5
@@ -66,27 +26,22 @@ _prodUnitsProgram: &prodUnitsProgram
     actions:
       - type: simulation.action.RunOneStepAction
         parameters: 1
-
   - time-distribution: 1
     type: Event
     actions:
       - type: simulation.action.OrderGeneratorAction
         parameters: [*resources, 2, 3] #[List of resources, number of recipes in order, number of steps in recipe]
-
   - time-distribution: 5
     type: Event
     actions:
       - type: simulation.action.AssignStepToProdUnitAction
-        parameters: ["ShortWaitingLis"] #routingPolicy: ["ShortWaitingList", "RandomProdUnit", "Self"(qualsiasi altro testo)]
-
+        parameters: *assign_mod #routingPolicy: ["ShortWaitingList", "RandomProdUnit", "Self"(qualsiasi altro testo)]
   - time-distribution: 1
     type: Event
     actions:
       - type: simulation.action.AddResourceToWarehouseAction
         parameters: [*resources]
-
 _prodUnits: &prodUnits
-
   - type: Point
     parameters: [ 1, 0 ]
     properties:
@@ -95,27 +50,7 @@ _prodUnits: &prodUnits
     contents:
       - molecule: prodUnit
     programs:
-      - *prodUnit1Programs
-
-  - type: Point
-    parameters: [ 0, 0 ]
-    properties:
-      - type: simulation.model.ProdUnit
-        parameters: [ "ProdUnit2", [ "ALL" ] ]
-    contents:
-      - molecule: prodUnit
-    programs:
-      - *prodUnit2-3Programs
-
-  - type: Point
-    parameters: [ 0, 0 ]
-    properties:
-      - type: simulation.model.ProdUnit
-        parameters: [ "ProdUnit3", [ "ALL" ] ]
-    contents:
-      - molecule: prodUnit
-    programs:
-      - *prodUnit2-3Programs
+      - *prodUnitsProgram
 
 deployments:
   *prodUnits
