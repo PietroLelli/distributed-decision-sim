@@ -39,7 +39,6 @@ dependencies {
 multiJvm {
     jvmVersionForCompilation.set(latestJava)
 }
-
 val batch: String by project
 val maxTime: String by project
 
@@ -104,7 +103,4 @@ tasks.withType<Tar>().configureEach {
 }
 tasks.withType<Zip>().configureEach {
     duplicatesStrategy = DuplicatesStrategy.WARN
-}
-kotlin {
-    jvmToolchain(23)
 }

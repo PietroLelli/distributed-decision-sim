@@ -15,10 +15,11 @@ network-model:
   type: FullyConnected
 _resources: &resources
   []
+
 variables:
   assign_mod: &assign_mod
     type: ArbitraryVariable
-    parameters: [["RandomProdUnit"], ["RandomProdUnit", "Self", "ShortWaitingList"]]
+    parameters: ["RandomProdUnit", ["RandomProdUnit", "Self", "ShortWaitingList"]]
 
 _prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 5
@@ -56,5 +57,5 @@ deployments:
   *prodUnits
 
 terminate:
-  - type: AfterTime
-    parameters: 300
+  type: AfterTime
+  parameter: 100

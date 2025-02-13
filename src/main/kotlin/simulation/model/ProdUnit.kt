@@ -19,6 +19,7 @@ class ProdUnit (
 
     var waitingList: List<Step> = listOf()
     private val queuingPolicy: QueuingPolicy<Step> = ExecuteFirstPolicy()
+    var executedSteps: List<Step> = listOf()
 
     fun isCapableOfExecute(step: Step): Boolean {
         return when {
@@ -41,10 +42,19 @@ class ProdUnit (
         val step = queuingPolicy.getNext(waitingList) { step -> step.state == State.ASSIGNED && step.checkResources().first }
         if (step != null) {
             step.execute()
+            executedSteps += step
             waitingList = waitingList.filter { it.idCode != step.idCode }
 //            println("\nProdUnit $idCode execute step: ${step.idCode}")
 //            environment.orders.forEach(Order::printOrder)
             println("Result size: " + environment.warehouse.results.size)
+            printExecutedSteps()
         }
+    }
+
+    private fun printExecutedSteps() {
+        println("ProdUnit $idCode executed steps:")
+        println("\t StepTypeA: ${executedSteps.count { it.type == StepType.TYPE_A }}")
+        println("\t StepTypeB: ${executedSteps.count { it.type == StepType.TYPE_B }}")
+        println("\t StepTypeC: ${executedSteps.count { it.type == StepType.TYPE_C }}")
     }
 }
