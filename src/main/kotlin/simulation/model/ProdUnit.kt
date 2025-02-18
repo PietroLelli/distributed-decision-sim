@@ -48,6 +48,11 @@ class ProdUnit (
             waitingList = waitingList.filter { it.idCode != step.idCode }
             val resultsSize = environment.warehouse.results.size
             node.setConcentration(SimpleMolecule("ResultsSize"), resultsSize)
+            when (step.type) {
+                StepType.TYPE_A -> { node.setConcentration(SimpleMolecule("CompletedStepA"), executedSteps.count { it.type == StepType.TYPE_A }) }
+                StepType.TYPE_B -> { node.setConcentration(SimpleMolecule("CompletedStepB"), executedSteps.count { it.type == StepType.TYPE_B }) }
+                StepType.TYPE_C -> { node.setConcentration(SimpleMolecule("CompletedStepC"), executedSteps.count { it.type == StepType.TYPE_C }) }
+            }
         }
     }
 

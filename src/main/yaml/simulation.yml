@@ -62,7 +62,9 @@ _prodUnits: &prodUnits
         parameters: [ "ProdUnit1", [ "ALL" ] ]
     contents:
       - molecule: ResultsSize
-        concentration: 0
+      - molecule: CompletedStepA
+      - molecule: CompletedStepB
+      - molecule: CompletedStepC
     programs:
       - *prodUnitsProgram
   - type: Point
@@ -72,7 +74,9 @@ _prodUnits: &prodUnits
         parameters: [ "ProdUnit2", [ "ALL" ] ]
     contents:
       - molecule: ResultsSize
-        concentration: 0
+      - molecule: CompletedStepA
+      - molecule: CompletedStepB
+      - molecule: CompletedStepC
     programs:
       - *prodUnitsProgram
   - type: Point
@@ -82,7 +86,9 @@ _prodUnits: &prodUnits
         parameters: [ "ProdUnit3", [ "ALL" ] ]
     contents:
       - molecule: ResultsSize
-        concentration: 0
+      - molecule: CompletedStepA
+      - molecule: CompletedStepB
+      - molecule: CompletedStepC
     programs:
       - *prodUnitsProgram
 
