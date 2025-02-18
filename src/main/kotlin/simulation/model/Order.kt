@@ -11,8 +11,8 @@ class Order(
         state = State.COMPLETE
         environment.completedOrders.add(this)
         environment.orders.remove(this)
-        println("COMPLETED order: $idCode")
-        println("TOT COST: ${environment.totCost} - TOT TIME: ${environment.totTime} - COMPLETED ORDERS: ${environment.completedOrders.size}")
+        //println("COMPLETED order: $idCode")
+        //println("TOT COST: ${environment.totCost} - TOT TIME: ${environment.totTime} - COMPLETED ORDERS: ${environment.completedOrders.size}")
     }
     fun printOrder() {
         println("Order $idCode")

@@ -64,8 +64,7 @@ class AssignStepToProdUnitAction (node: Node<Any>, val environment: DistributedD
         }
         val prodUnits = environment.nodes.mapNotNull { it.asProperty<Any, ProdUnit>() }
         prodUnits.forEach {
-            println()
-            println("ProdUnit ${it.idCode} waitingList.size: ${it.waitingList.size}}")
+            //println("ProdUnit ${it.idCode} waitingList.size: ${it.waitingList.size}}")
         }
     }
 

@@ -5,9 +5,11 @@ export:
   parameters:
     fileNameRoot: "export"
     exportPath: "data"
-    interval: 1.0
+    interval: 10.0
   data:
     - time
+    - molecule: "ResultsSize"
+      aggregators: [ mean, max, min ]
 
 environment:
   - type: simulation.DistributedDecisionEnvironment
@@ -20,6 +22,15 @@ variables:
   assign_mod: &assign_mod
     type: ArbitraryVariable
     parameters: ["RandomProdUnit", ["RandomProdUnit", "Self", "ShortWaitingList"]]
+  seed: &seed
+    min: 1
+    max: 10
+    step: 1
+    default: 1
+
+seeds:
+  scenario: *seed
+  simulation: *seed
 
 _prodUnitsProgram: &prodUnitsProgram
   - time-distribution: 5
@@ -37,11 +48,12 @@ _prodUnitsProgram: &prodUnitsProgram
     actions:
       - type: simulation.action.AssignStepToProdUnitAction
         parameters: *assign_mod #routingPolicy: ["ShortWaitingList", "RandomProdUnit", "Self"(qualsiasi altro testo)]
-  - time-distribution: 1
+  - time-distribution: 5
     type: Event
     actions:
       - type: simulation.action.AddResourceToWarehouseAction
         parameters: [*resources]
+
 _prodUnits: &prodUnits
   - type: Point
     parameters: [ 1, 0 ]
@@ -49,7 +61,28 @@ _prodUnits: &prodUnits
       - type: simulation.model.ProdUnit
         parameters: [ "ProdUnit1", [ "ALL" ] ]
     contents:
-      - molecule: prodUnit
+      - molecule: ResultsSize
+        concentration: 0
+    programs:
+      - *prodUnitsProgram
+  - type: Point
+    parameters: [ 1, 0 ]
+    properties:
+      - type: simulation.model.ProdUnit
+        parameters: [ "ProdUnit2", [ "ALL" ] ]
+    contents:
+      - molecule: ResultsSize
+        concentration: 0
+    programs:
+      - *prodUnitsProgram
+  - type: Point
+    parameters: [ 1, 0 ]
+    properties:
+      - type: simulation.model.ProdUnit
+        parameters: [ "ProdUnit3", [ "ALL" ] ]
+    contents:
+      - molecule: ResultsSize
+        concentration: 0
     programs:
       - *prodUnitsProgram
 

@@ -2,6 +2,7 @@ package simulation.model
 
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.NodeProperty
+import it.unibo.alchemist.model.molecules.SimpleMolecule
 import simulation.DistributedDecisionEnvironment
 import simulation.policy.ExecuteFirstPolicy
 import simulation.policy.QueuingPolicy
@@ -20,6 +21,7 @@ class ProdUnit (
     var waitingList: List<Step> = listOf()
     private val queuingPolicy: QueuingPolicy<Step> = ExecuteFirstPolicy()
     var executedSteps: List<Step> = listOf()
+    var resultsSize: Int = 0
 
     fun isCapableOfExecute(step: Step): Boolean {
         return when {
@@ -44,10 +46,8 @@ class ProdUnit (
             step.execute()
             executedSteps += step
             waitingList = waitingList.filter { it.idCode != step.idCode }
-//            println("\nProdUnit $idCode execute step: ${step.idCode}")
-//            environment.orders.forEach(Order::printOrder)
-            println("Result size: " + environment.warehouse.results.size)
-            printExecutedSteps()
+            val resultsSize = environment.warehouse.results.size
+            node.setConcentration(SimpleMolecule("ResultsSize"), resultsSize)
         }
     }
 
